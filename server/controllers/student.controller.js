@@ -20,11 +20,24 @@ exports.deleteStudent = async (req, res) => {
     res.send(result);    
 }
 
-exports.updateStudent = async (req, res) => { 
-    const result = await Student.findOne({_id : req.params.id});
-    if(result){
-        res.send(result);
-    }else{
-        res.send({"result" : "No record Found"});
+exports.getStudentId = async (req, res) => { 
+    try{
+        let result = await Student.findOne({_id : req.params.id});
+        console.log(result);
+        if(result){
+            res.send(result);
+        }else{
+            res.send({"result" : "No record Found"});
+        }
+    }catch(err){
+        res.status(404).json({mesage: "wrong Id"})      
     }
+}
+
+exports.updateStudentData = async (req, res) => { 
+    let result = await Student.updateOne(
+        {_id : req.params.id},
+        { $set : req.body}
+    );
+    res.send(result);
 }

@@ -15,7 +15,8 @@ mongoose.connect(dbconfig.DB_URL);
 app.post('/add',studentController.addStudent);
 app.get('/',studentController.getStudent);
 app.delete('/student/:id',studentController.deleteStudent);
-app.get('/student/:id',studentController.updateStudent);
+app.get('/student/:id',studentController.getStudentId);
+app.put('/student/:id',studentController.updateStudentData);
 
 //server initailization
 app.listen(8080,()=>{

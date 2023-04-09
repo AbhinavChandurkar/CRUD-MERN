@@ -1,5 +1,5 @@
-import React  from 'react';
-
+import React, { useEffect }  from 'react';
+import {useParams,useNavigate} from 'react-router-dom';
 
 
 const UpdateStudent = ()=>{
@@ -8,11 +8,36 @@ const UpdateStudent = ()=>{
     const [phoneNumber,setphoneNumber] = React.useState('');
     const [email,setEmail] = React.useState('');
     const [userType,setUserType] = React.useState('');
+    const params = useParams();
+    const navigate = useNavigate();
 
+    useEffect(()=>{
+        getDetails();
+    },[]);
+
+    const getDetails= async ()=>{
+        let result = await fetch(`http://localhost:8080/student/${params.id}`);
+        result = await result.json();
+        setName(result.name);
+        setUsername(result.userName);
+        setphoneNumber(result.phoneNumber);
+        setEmail(result.email);
+        setUserType(result.userType);
+    };
 
     const UpdateStudent = async ()=>{
         console.log(name,userName,email,phoneNumber);
-        let result = await fetch()
+        let result = await fetch(`http://localhost:8080/student/${params.id}`,{
+            method : "PUT",
+            body : JSON.stringify({name,userName,email,phoneNumber,userType}),
+            headers : {
+                'Content-type' : 'Application/json'
+            }
+        });
+        result = await result.json();
+        if(result){
+            navigate('/');
+        }
     }
     return(
         <div className='student'>
