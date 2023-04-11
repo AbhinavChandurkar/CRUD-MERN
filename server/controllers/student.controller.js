@@ -41,3 +41,24 @@ exports.updateStudentData = async (req, res) => {
     );
     res.send(result);
 }
+
+exports.searchStudentData = async (req, res) => { 
+    try {
+        let result = await Student.find({
+            "$or" : [
+                {
+                    name : {$regex : req.params.key}
+                },
+                {
+                    userName : {$regex : req.params.key}
+                },
+                {
+                    userType : {$regex : req.params.key}
+                }
+            ]
+        });
+        res.send(result);
+    } catch (error) {
+        console.log(error);
+    }
+}

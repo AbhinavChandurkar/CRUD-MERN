@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {useNavigate} from 'react-router-dom';
 
 
 const AddStudent = ()=>{
@@ -8,6 +8,7 @@ const AddStudent = ()=>{
     const [phoneNumber,setphoneNumber] = React.useState('');
     const [email,setEmail] = React.useState('');
     const [userType,setUserType] = React.useState('');
+    const navigate = useNavigate();
 
     const addstudent = async ()=>{
         // console.warn(name,userName,phoneNumber,email,userType);
@@ -20,6 +21,9 @@ const AddStudent = ()=>{
         });
         result = await result.json();
         console.warn(result);
+        if(result){
+            navigate('/');
+        }
     }
     return(
         <div className='student'>
